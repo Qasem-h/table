@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-fixed-main-content">
+  <% @by_league_time.each do |country, matches| %>
+	<div class="portlet box green">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="fa fa-cogs"></i><%= country %>
+			</div>
+			<div class="tools">
+				<a href="javascript:;" class="collapse">
+				</a>
+				<a href="#portlet-config" data-toggle="modal" class="config">
+				</a>
+				<a href="javascript:;" class="reload">
+				</a>
+				<a href="javascript:;" class="remove">
+				</a>
+			</div>
+		</div>
+		<div class="portlet-body flip-scroll">
+			<table class="table table-bordered table-striped table-condensed flip-content">
+			<thead class="flip-content">
+			<tr>
+				<th width="20%">
+					 Date & Time
+				</th>
+				<th>
+					 Home
+				</th>
+				<th>
+					 Draw
+				</th>
+				<th>
+					 Away
+				</th>
+				<th>
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+        <% matches.each do |match| %>
+			<tr>
+				<td>
+					  <%= match["time"].to_time.strftime("%d %b %I:%M%p") %>
+				</td>
+				<td>
+					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}" %>
+				</td>
+				<td>
+					 Draw | <%= match["oddwind"] %>
+				</td>
+				<td>
+					 <%= match["awayteam"] %> | <%= match["oddwina"] %>
+				</td>
+				<td class="numeric">
+					 +
+				</td>
+			</tr>
+      <% end %>
+			</tbody>
+			</table>
+		</div>
+	</div>
+  <% end %>
+  
+<%= render :partial => 'posts/post', :object => @post %>
+</div>
