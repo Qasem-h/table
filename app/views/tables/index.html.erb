@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="portlet-body flip-scroll">
-			<table class="table table-bordered table-striped table-condensed flip-content">
+			<table class="table table-bordered table-striped table-condensed flip-content" id="table1">
 			<thead class="flip-content">
 			<tr>
 				<th width="20%">
@@ -64,4 +64,17 @@
 	</div>
   <% end %>
 
+
+<%= form_for Game.new do |f| %>
+
+
+
+    <%= f.text_field :stake, placeholder: "stake" %>
+    <%= f.text_field :home, placeholder: "home" %>
+    <%= f.text_field :away, placeholder: "away" %>
+    <%= f.text_field :type, placeholder: "type" %>
+    <%= f.text_field :bet, placeholder: "bet" %>
+
+      <%= f.submit %>
+<% end %>
 </div>
