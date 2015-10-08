@@ -14,7 +14,7 @@ class GamesController < ApplicationController
   private
   
   def params_transactions
-    params.require(:game).permit(:stake, :home, :away, :type, :bet)
+    params.require(:game).permit(:home, :match_id)
   end
   
 end

@@ -45,7 +45,7 @@
 					  <%= match["time"].to_time.strftime("%d %b %I:%M%p") %>
 				</td>
 				<td>
-					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}","javascript:void(0)",data: {id: match["matchid"], datetime: match["datetime"],},:id=>"match_id" %>
+					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}","javascript:void(0)",data: {id: match["matchid"], datetime: match["datetime"], home: match["hometeam"]},:id=>"match_id" %>
 				</td>
 				<td>
 					 Draw | <%= match["oddwind"] %>
@@ -65,29 +65,34 @@
   <% end %>
 
 
-<%= form_for Game.new do |f| %>
-
-
-
-    <%= f.text_field :stake, placeholder: "stake" %>
-    <%= f.text_field :home, placeholder: "home" %>
-    <%= f.text_field :away, placeholder: "away" %>
-    <%= f.text_field :type, placeholder: "type" %>
-    <%= f.text_field :bet, placeholder: "bet" %>
-
-      <%= f.submit %>
-<% end %>
+  <%= simple_form_for Game.new do |f| %>
+    <span id='game_title'></span>
+    <%= f.hidden_field :home %>
+    <%= f.hidden_field :match_id %>
+    <%= f.button :submit, class: 'hidden', id: 'build_game' %>
+    <%= link_to 'x', '#', class: 'hidden', id: 'remove_game' %>
+  <% end %>
 </div>
 <script type="text/javascript">
 	$(document).on('click','#match_id',function(){
 		var data_id = $(this).attr('data-id');
-		var data_time = $(this).attr('data-datetime');
+		var home_team = $(this).attr('data-home');
 		var data_val = $(this).text().trim().split("|");
-        var table_data = $(this).parents('tr').find("td:nth-child(4)").html().trim().split("|");
-       
-        var link_val = data_val[0] +" vs "+table_data[0]+" | "+data_val[0]+" @ "+ data_val[1];
-		$(this).text(link_val);
-		$("#new_game").prepend("<input type='hidden' name='game[matchid]' value='"+data_id+"'/><input type='hidden' name='game[datetime]' value='"+data_time+"'/><input type='hidden' name='game[bet]' value='"+data_val[0]+"'/><input type='hidden' name='game[odds]' value='"+data_val[1]+"' />");
-         
+    var table_data = $(this).parents('tr').find("td:nth-child(4)").html().trim().split("|");
+    var link_val = data_val[0] +" vs "+table_data[0]+" | "+data_val[0]+" @ "+ data_val[1];
+
+    $('#game_home').val(home_team);
+    $('#game_match_id').val(data_id);
+    $('#game_title').html(link_val);
+    $('#build_game, #remove_game').removeClass('hidden')
 	});
+
+  $(document).on('click', '#remove_game', function(event) {
+    event.preventDefault();
+
+    $('#game_home').val('');
+    $('#game_match_id').val('');
+    $('#game_title').html('');
+    $('#build_game, #remove_game').addClass('hidden')
+  });
 </script>
