@@ -45,7 +45,7 @@
 					  <%= match["time"].to_time.strftime("%d %b %I:%M%p") %>
 				</td>
 				<td>
-					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}","javascript:void(0)",data: {id: match["matchid"], datetime: match["datetime"]},:id=>"match_id" %>
+					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}","javascript:void(0)",data: {id: match["matchid"], datetime: match["datetime"],},:id=>"match_id" %>
 				</td>
 				<td>
 					 Draw | <%= match["oddwind"] %>
@@ -82,7 +82,12 @@
 	$(document).on('click','#match_id',function(){
 		var data_id = $(this).attr('data-id');
 		var data_time = $(this).attr('data-datetime');
-		$("#new_game").prepend("<input type='hidden' name='matchid' value="+data_id+"/><input type='hidden' name='datetime' value="+data_time+"/>");
-
+		var data_val = $(this).text().trim().split("|");
+        var table_data = $(this).parents('tr').find("td:nth-child(4)").html().trim().split("|");
+       
+        var link_val = data_val[0] +" vs "+table_data[0]+" | "+data_val[0]+" @ "+ data_val[1];
+		$(this).text(link_val);
+		$("#new_game").prepend("<input type='hidden' name='game[matchid]' value='"+data_id+"'/><input type='hidden' name='game[datetime]' value='"+data_time+"'/><input type='hidden' name='game[bet]' value='"+data_val[0]+"'/><input type='hidden' name='game[odds]' value='"+data_val[1]+"' />");
+         
 	});
 </script>
