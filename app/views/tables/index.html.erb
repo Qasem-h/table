@@ -45,7 +45,7 @@
 					  <%= match["time"].to_time.strftime("%d %b %I:%M%p") %>
 				</td>
 				<td>
-					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}" %>
+					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}","javascript:void(0)",data: {id: match["matchid"], datetime: match["datetime"]},:id=>"match_id" %>
 				</td>
 				<td>
 					 Draw | <%= match["oddwind"] %>
@@ -78,3 +78,11 @@
       <%= f.submit %>
 <% end %>
 </div>
+<script type="text/javascript">
+	$(document).on('click','#match_id',function(){
+		var data_id = $(this).attr('data-id');
+		var data_time = $(this).attr('data-datetime');
+		$("#new_game").prepend("<input type='hidden' name='matchid' value="+data_id+"/><input type='hidden' name='datetime' value="+data_time+"/>");
+
+	});
+</script>
