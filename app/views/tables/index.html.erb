@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <div class="page-fixed-main-content">
-  <% @by_league_time.each do |country, matches| %>
+  <% @by_league_time.each do |league, matches| %>
 	<div class="portlet box green">
 		<div class="portlet-title">
 			<div class="caption">
-				<i class="fa fa-cogs"></i><%= country %>
+				<i class="fa fa-cogs"></i><%= league %>
 			</div>
 			<div class="tools">
 				<a href="javascript:;" class="collapse">
@@ -42,16 +42,16 @@
         <% matches.each do |match| %>
 			<tr>
 				<td>
-					  <%= match["time"].to_time.strftime("%d %b %I:%M%p") %>
+					  <%= match.time.to_time.strftime("%d %b %I:%M%p") %>
 				</td>
 				<td>
-					 <%= link_to "#{match["hometeam"]} | #{match["oddwinh"]}","javascript:void(0)",data: {id: match["matchid"], datetime: match["datetime"], home: match["hometeam"]},:id=>"match_id" %>
+					 <%= link_to "#{match.hometeam} | #{match.oddwinh}","javascript:void(0)",data: {id: match.id, datetime: match.date, home: match.hometeam},:id=>"match_id" %>
 				</td>
 				<td>
-					 Draw | <%= match["oddwind"] %>
+					 Draw | <%= match.oddwind %>
 				</td>
 				<td>
-					 <%= match["awayteam"] %> | <%= match["oddwina"] %>
+					 <%= match.awayteam %> | <%= match.oddwina %>
 				</td>
 				<td class="numeric">
 					 +
