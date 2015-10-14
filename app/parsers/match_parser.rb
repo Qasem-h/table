@@ -19,6 +19,10 @@ class MatchParser
     league.country
   end
 
+  def name
+    "#{hometeam} vs #{awayteam}"
+  end
+
   def time
     [@date, @time].join(' ')
   end
