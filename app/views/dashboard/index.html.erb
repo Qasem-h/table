@@ -1,98 +1,88 @@
-<p id="notice"><%= notice %></p>
+<header>
+  <h1>Sportsbook</h1>
+</header>
 
-<div class="page-fixed-main-content">
-  <% @by_league_time.each do |league, matches| %>
-	<div class="portlet box green">
-		<div class="portlet-title">
-			<div class="caption">
-				<i class="fa fa-cogs"></i><%= league %>
-			</div>
-			<div class="tools">
-				<a href="javascript:;" class="collapse">
-				</a>
-				<a href="#portlet-config" data-toggle="modal" class="config">
-				</a>
-				<a href="javascript:;" class="reload">
-				</a>
-				<a href="javascript:;" class="remove">
-				</a>
-			</div>
-		</div>
-		<div class="portlet-body flip-scroll">
-			<table class="table table-bordered table-striped table-condensed flip-content" id="table1">
-			<thead class="flip-content">
-			<tr>
-				<th width="20%">
-					 Date & Time
-				</th>
-				<th>
-					 Home
-				</th>
-				<th>
-					 Draw
-				</th>
-				<th>
-					 Away
-				</th>
-				<th>
-				</th>
-			</tr>
-			</thead>
-			<tbody>
-        <% matches.each do |match| %>
-			<tr>
-				<td>
-					  <%= match.time.to_time.strftime("%d %b %I:%M%p") %>
-				</td>
-				<td>
-					 <%= link_to "#{match.hometeam} | #{match.oddwinh}","javascript:void(0)",data: {id: match.id, datetime: match.date, home: match.hometeam},:id=>"match_id" %>
-				</td>
-				<td>
-					 Draw | <%= match.oddwind %>
-				</td>
-				<td>
-					 <%= match.awayteam %> | <%= match.oddwina %>
-				</td>
-				<td class="numeric">
-					 +
-				</td>
-			</tr>
-      <% end %>
-			</tbody>
-			</table>
-		</div>
-	</div>
+<div class="wrapper" data-ng-app="sportsBook">
+
+  <%= simple_form_for @betslip do |f| %>
+    <!--  sportsbook -->
+    <article class="content">
+      <header>
+        <h2>Sportsbook</h2>
+      </header>
+      <section class="element">
+        <h2>Please choose from the available matches:</h2>
+        <hr>
+        <table>
+          <thead>
+            <tr>
+              <th>match</th>
+              <th>home</th>
+              <th>draw</th>
+              <th>away</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="m in matches">
+              <td>{{ m.match }}</td>
+              <td class="center"><button ng-click="m.odd = m.home">{{ m.home | number:2 }}</button></td>
+              <td class="center"><button ng-click="m.odd = m.draw">{{ m.draw | number:2 }}</button></td>
+              <td class="center"><button ng-click="m.odd = m.away">{{ m.away | number:2 }}</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </article>
+ 
+    <!--  betslip -->
+    <article class="content">
+      <header>
+        <h2>Your betslip</h2>
+      </header>
+      <section class="element" data-ng-controller="sportsBookController">
+        <h2>bellow is your betslip data:</h2>
+        <hr>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>selections</th>
+              <th>Stake</th>
+              <th>Odds</th>
+              <th>Winnings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="b in matches | filter:{odd: '!null'} | filter:id as results">
+              <td class="center"><button title="Remove" ng-click="b.odd = null; b.stake = null">x</button></td>
+              <td>{{ b.match }}</td>
+              <td class="center">
+                <form name="betslip">
+                  &pound; <input type="number" name="stakeinput" placeholder="0.00" data-ng-model="b.stake" data-ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
+                  <span class="error" ng-show="betslip.stakeinput.$error.required">Missing Stake!</span>
+                  <span class="error" ng-show="betslip.stakeinput.$error.number">Currency only!</span>
+                </form>
+              </td>
+              <td class="center">{{ b.odd | number:2 }}</td>
+              <td class="center">{{ (results.length>1) ? '' : ((b.stake * b.odd) | currency : '&pound;' : fractionSize:2) }}</td>
+            </tr>
+          </tbody>
+          <tfoot ng-show="results.length>0">
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="center">{{ matches | sumOfValue:'stake' | number:2 }}</td>
+              <td class="center">{{ matches | sumOfValue:'odd' | number:2 }}</td>
+              <td class="center">{{ (matches | sumOfValue:'stake') * (matches | sumOfValue:'odd') | currency : '&pound;' : fractionSize:2 }}</td>
+          </tfoot>
+        </table>
+      </section>
+    </article>
   <% end %>
 
-
-  <%= simple_form_for Game.new do |f| %>
-    <span id='game_title'></span>
-    <%= f.hidden_field :home %>
-    <%= f.hidden_field :match_id %>
-    <%= f.button :submit, class: 'hidden', id: 'build_game' %>
-    <%= link_to 'x', '#', class: 'hidden', id: 'remove_game' %>
-  <% end %>
 </div>
-<script type="text/javascript">
-	$(document).on('click','#match_id',function(){
-		var data_id = $(this).attr('data-id');
-		var home_team = $(this).attr('data-home');
-		var data_val = $(this).text().trim().split("|");
-    var table_data = $(this).parents('tr').find("td:nth-child(4)").html().trim().split("|");
-    var link_val = data_val[0] +" vs "+table_data[0]+" | "+data_val[0]+" @ "+ data_val[1];
 
-    $('#game_home').val(home_team);
-    $('#game_match_id').val(data_id);
-    $('#game_title').html(link_val);
-    $('#build_game, #remove_game').removeClass('hidden')
-	});
-
-  $(document).on('click', '#remove_game', function(event) {
-    event.preventDefault();
-
-    $('#game_home').val('');
-    $('#game_match_id').val('');
-    $('#game_title').html('');
-    $('#build_game, #remove_game').addClass('hidden')
-  });
-</script>
+<footer>
+  <div class="footer-left uppercase">2015 - <a href="http://joseporto.pt/">Undefined</a></div>
+  <div class="footer-right">designed for <a href="#" title="somehone">someone</a></div>
+</footer>

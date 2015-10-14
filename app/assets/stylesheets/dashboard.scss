@@ -1,0 +1,251 @@
+.hidden {
+  display: none;
+}
+/* ****************************** */
+/* Author: José Porto             */
+/*                                */
+/* Reset only mentions the needed */
+/* elements, not to be used for   */
+/* production.                    */
+/* ****************************** */
+
+/* variables */
+
+//colors
+$color_silver_approx: #bcbcbc;
+$color_mine_shaft_approx: #333;
+$color_crimson_approx: #e31837;
+$white: #fff;
+$color_chicago_approx: #595959;
+$color_rangoon_green_approx: #191919;
+
+//fonts
+$font_0: Montserrat;
+$font_1: sans-serif;
+
+/* ******************* */
+/* Makeshift CSS Reset */
+/* ******************* */
+
+/* Tell the browser to render HTML 5 elements as block */
+header,
+footer,
+article {
+  display: block;
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid $color_silver_approx;
+  margin: 0.5em 5px;
+  padding: 0;
+}
+input {
+  vertical-align: top;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+button:focus {
+  outline: 0 !important;
+}
+
+
+/* ******************* */
+/* Main Styling        */
+/* ******************* */
+body {
+  background-color: $color_mine_shaft_approx;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 100%; /* when using em, this is best for all browser! */
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  & header {
+    display: block;
+    position: relative;
+    text-align: center;
+    background: transparentize($color_rangoon_green_approx, 0.2);
+    border-bottom: 4px solid transparentize($color_rangoon_green_approx, 0.2);
+    color: $white;
+    padding: 4px;
+    height: 30px;
+    font-size: 0.8em;
+    border-bottom: solid 1px black;
+    & h1 {
+      font-variant: small-caps
+    }
+    & .brand {
+      width: 120px;
+      height: 30px;
+      display: block;
+      float: left;
+    }
+  }
+}
+
+html {
+  line-height: 1.6em;
+}
+a {
+  color: $color_crimson_approx;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+    }
+}
+h1 {
+  font-size: 1.6em;
+}
+h2 {
+  font-size: 1.2em;
+}
+.wrapper {
+  font-size: 0.8em; /* equals 13px from 100% global font-size */
+  max-width: 960px; /* standard 1024px wide */
+  position: absolute;
+  top: 39px;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-height: 100%;
+}
+
+/* Content */
+article.content {
+  overflow: hidden;
+  margin-bottom: 20px;
+  & header {
+    margin: 10px 10px 0px 10px;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(222, 222, 222, 1);
+    border: none;
+    text-shadow: 1px 1px 1px #111;
+    text-align: left;
+    padding: 5px 10px;
+    height: auto;
+    text-transform: capitalize;
+  }
+  & section {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    overflow: hidden;
+    & h2 {
+      color: #595959;
+      font-size: 1em;
+      text-transform: uppercase;
+    }
+    @media only screen and (min-width : 960px) {
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+  }
+}
+
+.element {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  overflow: hidden;
+}
+
+/* table */
+table {
+  border-spacing: 2px;
+  background: transparent;
+  width: 100%;
+  & thead th {
+    text-transform: capitalize;
+    color: #595959;
+  }
+  & tbody tr {
+    &:nth-child(even) {
+      background-color: transparentize($white, 0.6);
+    }
+    &:nth-child(odd) {
+      background-color: transparentize($white, 0.4);
+    }
+    &:hover td {
+      background-color: $white;
+      border-bottom: 4px solid transparentize($color_crimson_approx, 0.5);
+    }
+  }
+  & td {
+    padding: 5px 10px;
+    border-bottom: 4px solid $white;
+    &.center {
+      text-align: center;
+    }
+  }
+  & .hidden {
+    display: none;
+  }
+  & button {
+    border: none;
+    background: transparent;
+    font: inherit;
+    color: $color_crimson_approx;
+    &:hover {
+      text-shadow: 0px 0px 1px black;
+      color: #f13450;
+      cursor: pointer;
+    }
+  }
+  & input[type=number] {
+    border: none;
+    font: inherit;
+    width: 50px !important;
+    margin: 0;
+    padding: 0 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    clear: both;
+  }
+}
+
+form span {
+  font-size: 0.8em;
+  display: block;
+  margin-top: 5px;
+  color: #595959;
+}
+
+/* Footer */
+footer {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  font-size: 0.5em;
+  text-align: center;
+  background: transparentize($color_rangoon_green_approx, 0.2);
+  color: rgba(94, 94, 94, 1);
+  vertical-align: middle;
+  & a {
+    text-transform: uppercase;
+  }
+  & .footer-left {
+    width: 45%;
+    float: left;
+    text-align: left;
+  }
+  & .footer-right {
+    width: 45%;
+    float: right;
+    text-align: right;
+  }
+}
