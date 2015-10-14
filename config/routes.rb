@@ -2,5 +2,5 @@ Rails.application.routes.draw do
   resources :games, only: [:create, :show, :index]
   resources :betslips, only: [:create]
 
-  root 'tables#index'
+  root 'dashboard#index'
 end
