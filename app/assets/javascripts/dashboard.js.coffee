@@ -20,3 +20,8 @@ $ ->
 
     $newGame.find('input.bet').val($(this).html())
     $newGame.find('input.match-id').val($(this).data('id'))
+
+  $(document).on 'click', '.remove-game', (e) ->
+    e.preventDefault()
+
+    $(this).closest('.game').remove()
