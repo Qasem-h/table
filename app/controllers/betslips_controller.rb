@@ -8,6 +8,6 @@ class BetslipsController < ApplicationController
   private
 
   def betslip_params
-    params.require(:betslip).permit(games_attributes: [:home, :away, :match_id])
+    params.require(:betslip).permit(:winnings, games_attributes: [:home, :away, :match_id])
   end
 end

@@ -5,6 +5,7 @@
 <div class="wrapper">
 
   <%= simple_form_for @betslip do |f| %>
+    <%= f.input :winnings, as: :hidden, input_html: { class: 'betslip-winnings' } %>
     <!--  sportsbook -->
     <article class="content">
       <header>
@@ -66,8 +67,18 @@
                 </td>
                 </tr>
             </tbody>
+            <tfoot class='betslip-summary'>
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="center stake"></td>
+                <td class="center odds"></td>
+                <td class="center winnings"></td>
+              </tr>
+            </tfoot>
         </table>
       </section>
     </article>
+    <%= f.button :submit, class: 'create-betslip hidden' %>
   <% end %>
 </div>

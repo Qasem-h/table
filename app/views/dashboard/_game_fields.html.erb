@@ -1,8 +1,9 @@
 <tr class="new-game game">
   <td class="center"><button title="Remove" class='remove-game'>x</button></td>
   <td class="match-name"></td>
-  <td class="center"><%= f.input :stake, as: :float, label: false, input_html: { value: nil, placeholder: '0.00', step: '0.01', min: '0.01' } %></td>
+  <td class="center"><%= f.input :stake, as: :currency, label: false, input_html: { value: nil, placeholder: '0.00', step: '0.01', min: '0.01', class: 'stake' } %></td>
   <td class="center odds"></td>
+  <td></td>
   <td class='hidden'>
     <%= f.input :home, as: :hidden, input_html: { class: 'home' } %>
     <%= f.input :away, as: :hidden, input_html: { class: 'away' } %>
