@@ -2,11 +2,17 @@ $ ->
   $(document).on 'click', '.make-bet', (e) ->
     e.preventDefault()
 
-    $('.add-new-game').click()
-    $('.new-game').appendTo('.games-container')
+    matchId = $(this).data('id')
+
+    if $(".game[data-id=#{matchId}]").length
+      $newGame = $(".game[data-id=#{matchId}]").first()
+    else
+      $('.add-new-game').click()
+      $('.new-game').appendTo('.games-container')
+      $newGame = $('.new-game').removeClass('new-game')
+      $newGame.attr('data-id', matchId)
 
     $match = $(this).closest('.match')
-    $newGame = $('.new-game').removeClass('new-game')
     team = $(this).data('home') || $(this).data('away') || 'draw'
     matchName = "#{$match.find('.match-name').html()} | #{team} @ #{$(this).html()}"
 
@@ -19,16 +25,17 @@ $ ->
       $newGame.find('input.away').val(team)
 
     $newGame.find('input.bet').val($(this).html())
-    $newGame.find('input.match-id').val($(this).data('id'))
+    $newGame.find('input.match-id').val(matchId)
 
+    calculateWinnings()
     $('.create-betslip').removeClass('hidden')
 
   $(document).on 'click', '.remove-game', (e) ->
     e.preventDefault()
 
     $(this).closest('.game').remove()
-    calculateWinnings()
 
+    calculateWinnings()
     $('.create-betslip').addClass('hidden') unless $('.game').length
 
   $(document).on 'change keyup', '.stake', (e) ->
@@ -43,7 +50,16 @@ $ ->
 
     winnings = odds * stakes
     $betslipSummary = $('.betslip-summary')
-    $betslipSummary.find('.stake').html(stakes.toFixed(2))
-    $betslipSummary.find('.odds').html(odds.toFixed(2))
-    $betslipSummary.find('.winnings').html("£#{winnings.toFixed(2)}")
-    $('.betslip-winnings').val(winnings.toFixed(2))
+
+    if isNaN(winnings)
+      $betslipSummary.find('.stake').html('')
+      $betslipSummary.find('.odds').html(odds.toFixed(2))
+      $betslipSummary.find('.winnings').html('')
+      $('.betslip-winnings').val(0)
+      $('.create-betslip').addClass('hidden')
+    else
+      $betslipSummary.find('.stake').html(stakes.toFixed(2))
+      $betslipSummary.find('.odds').html(odds.toFixed(2))
+      $betslipSummary.find('.winnings').html("£#{winnings.toFixed(2)}")
+      $('.betslip-winnings').val(winnings.toFixed(2))
+      $('.create-betslip').removeClass('hidden')
