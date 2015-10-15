@@ -28,11 +28,11 @@
                 <th><%= league %></th>
               </tr>
               <% matches.each do |match| %>
-                <tr>
-                  <td><%= match.name %></td>
-                  <td class="center"><%= link_to_add_association match.oddwinh, f, :games %></td>
-                  <td class="center"><%= link_to_add_association match.oddwind, f, :games %></td>
-                  <td class="center"><%= link_to_add_association match.oddwina, f, :games %></td>
+                <tr class='match'>
+                  <td class="match-name"><%= match.name %></td>
+                  <td class="center"><%= link_to match.oddwinh, '#', class: 'make-bet', data: { id: match.id, home: match.hometeam } %></td>
+                  <td class="center"><%= link_to match.oddwind, '#', class: 'make-bet', data: { id: match.id } %></td>
+                  <td class="center"><%= link_to match.oddwina, '#', class: 'make-bet', data: { id: match.id, away: match.awayteam } %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -59,20 +59,13 @@
               <th>Winnings</th>
             </tr>
           </thead>
-          <div id='games'>
-            <tbody>
-              <%= f.simple_fields_for :games do |game| %>
-              <% end %>
+            <tbody class='games-container'>
+              <tr class='hidden'>
+                <td>
+                  <%= link_to_add_association 'link', f, :games, class: 'add-new-game' %>
+                </td>
+                </tr>
             </tbody>
-          </div>
-          <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="center"></td>
-              <td class="center"></td>
-              <td class="center"></td>
-          </tfoot>
         </table>
       </section>
     </article>

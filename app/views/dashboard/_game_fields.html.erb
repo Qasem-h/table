@@ -1,7 +1,12 @@
-<tr>
+<tr class="new-game">
   <td class="center"><button title="Remove">x</button></td>
-  <td></td>
-  <td class="center"></td>
-  <td class="center"></td>
-  <td class="center"></td>
+  <td class="match-name"></td>
+  <td class="center"><%= f.input :stake, as: :float, label: false, input_html: { step: '0.01' } %></td>
+  <td class="center odds"></td>
+  <td class='hidden'>
+    <%= f.input :home, as: :hidden %>
+    <%= f.input :away, as: :hidden %>
+    <%= f.input :match_id, as: :hidden %>
+    <%= f.input :home, as: :hidden %>
+  </td>
 </tr>
