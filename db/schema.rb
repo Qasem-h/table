@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013190944) do
+ActiveRecord::Schema.define(version: 20151018174917) do
 
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
@@ -33,10 +33,5 @@ ActiveRecord::Schema.define(version: 20151013190944) do
   end
 
   add_index "games", ["betslip_id"], name: "index_games_on_betslip_id"
-
-  create_table "tables", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
 end
