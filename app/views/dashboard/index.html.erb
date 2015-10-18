@@ -23,17 +23,17 @@
               <th>away</th>
             </tr>
           </thead>
-          <% @by_league_time.each do |league, matches| %>
+          <% @leagues.each do |league| %>
             <tbody>
               <tr>
-                <th><%= league %></th>
+                <th><%= league.name %></th>
               </tr>
-              <% matches.each do |match| %>
+              <% league.matches.each do |match| %>
                 <tr class='match'>
                   <td class="match-name"><%= match.name %></td>
-                  <td class="center"><%= link_to match.oddwinh, '#', class: 'make-bet', data: { id: match.id, home: match.hometeam } %></td>
-                  <td class="center"><%= link_to match.oddwind, '#', class: 'make-bet', data: { id: match.id } %></td>
-                  <td class="center"><%= link_to match.oddwina, '#', class: 'make-bet', data: { id: match.id, away: match.awayteam } %></td>
+                  <td class="center"><%= link_to match.oddwinh, '#', class: 'make-bet', data: { id: match.static_id, home: match.hometeam } %></td>
+                  <td class="center"><%= link_to match.oddwind, '#', class: 'make-bet', data: { id: match.static_id } %></td>
+                  <td class="center"><%= link_to match.oddwina, '#', class: 'make-bet', data: { id: match.static_id, away: match.awayteam } %></td>
                 </tr>
               <% end %>
             </tbody>

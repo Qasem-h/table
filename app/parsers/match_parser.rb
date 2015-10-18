@@ -23,8 +23,8 @@ class MatchParser
     "#{hometeam} vs #{awayteam}"
   end
 
-  def time
-    [@date, @time].join(' ')
+  def datetime
+    Time.parse([@date, @time].join(' '))
   end
 
   def bookmaker
