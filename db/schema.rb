@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018175800) do
+ActiveRecord::Schema.define(version: 20151018180933) do
 
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
@@ -40,5 +40,25 @@ ActiveRecord::Schema.define(version: 20151018175800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "matches", force: :cascade do |t|
+    t.string   "static_id"
+    t.string   "alternate_id"
+    t.datetime "play_date"
+    t.string   "hometeam"
+    t.string   "awayteam"
+    t.integer  "league_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "odd_types", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "odd_types", ["match_id"], name: "index_odd_types_on_match_id"
 
 end
