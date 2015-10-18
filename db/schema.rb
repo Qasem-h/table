@@ -11,13 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018180933) do
+ActiveRecord::Schema.define(version: 20151018181449) do
 
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
+
+  create_table "bookmakers", force: :cascade do |t|
+    t.integer  "odd_type_id"
+    t.integer  "api_id"
+    t.string   "name"
+    t.decimal  "home_win"
+    t.decimal  "away_win"
+    t.decimal  "draw"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "bookmakers", ["odd_type_id"], name: "index_bookmakers_on_odd_type_id"
 
   create_table "games", force: :cascade do |t|
     t.integer  "winnings"
