@@ -8,21 +8,16 @@ class LoadLeagueData
   end
 
   def run
-    initialize_leagues
-    odds_feed.matches.select { |match| match.type.present? }
-  end
-
-  private
-
-  def initialize_leagues
     odds_feed.leagues.each do |league_parser|
       league = League.find_or_create_by(country: league_parser.country, name: league_parser.name)
       update_matches(league_parser, league)
     end
   end
 
+  private
+
   def update_matches(league_parser, league)
-    league_parser.matches.each { |match_parser| update_match(match_parser, league) }
+    league_parser.matches.select { |match| match.type.present? }.each { |match_parser| update_match(match_parser, league) }
   end
 
   def update_match(match_parser, league)
