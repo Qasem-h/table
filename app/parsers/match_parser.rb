@@ -9,8 +9,14 @@ class MatchParser
   attribute :time
   element :home, value: :name, as: :hometeam
   element :away, value: :name, as: :awayteam
-  element :type, class: OddTypeParser, with: {
-    name: '1x2'
+  elements :type, as: :standard_types, class: StandardOddTypeParser, with: {
+    name: /(1x2|Home\/Away|1x2 1st Half|Team To Score First|Team To Score Last)/
+  }
+  elements :type, as: :over_under_types, class: OverUnderOddTypeParser, with: {
+    name: /(Over\/Under|Over\/Under 1st Half|Over\/Under 2nd Half)/
+  }
+  element :type, as: :handicap_type, class: HandicapOddTypeParser, with: {
+    name: 'Handicap'
   }
   ancestor :league do |league|
     league.name
