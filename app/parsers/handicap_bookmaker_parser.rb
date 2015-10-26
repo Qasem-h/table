@@ -1,6 +1,5 @@
 class HandicapBookmakerParser
   include SAXMachine
 
-  attribute :name
-  elements :odd, as: :odds, class: OddParser
+  elements :handicap, as: :handicaps, class: HandicapParser
 end
