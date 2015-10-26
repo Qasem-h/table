@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025195559) do
+ActiveRecord::Schema.define(version: 20151026072848) do
 
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20151025195559) do
 
   add_index "games", ["betslip_id"], name: "index_games_on_betslip_id"
 
+  create_table "handicapes", force: :cascade do |t|
+    t.string   "name"
+    t.decimal  "value"
+    t.string   "handicape_type"
+    t.integer  "bookmaker_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "leagues", force: :cascade do |t|
     t.string   "name"
     t.string   "country"
@@ -75,14 +84,5 @@ ActiveRecord::Schema.define(version: 20151025195559) do
   end
 
   add_index "odd_types", ["match_id"], name: "index_odd_types_on_match_id"
-
-  create_table "table_handicapes", force: :cascade do |t|
-    t.string   "name"
-    t.decimal  "value"
-    t.string   "handicape_type"
-    t.integer  "bookmaker_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
 
 end
