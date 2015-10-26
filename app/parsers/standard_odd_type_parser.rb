@@ -2,5 +2,5 @@ class StandardOddTypeParser
   include SAXMachine
 
   attribute :name
-  element :bookmaker, class: BookmakerParser
+  element :bookmaker, class: StandardBookmakerParser
 end

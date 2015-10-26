@@ -7,6 +7,7 @@ class MatchParser
     date.to_date
   end
   attribute :time
+
   element :home, value: :name, as: :hometeam
   element :away, value: :name, as: :awayteam
   elements :type, as: :standard_types, class: StandardOddTypeParser, with: {
