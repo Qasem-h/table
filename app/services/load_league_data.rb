@@ -46,12 +46,18 @@ class LoadLeagueData
       end
 
       match_parser.over_under_types.each do |type_parser|
-        attributes << { name: type_parser.name, bookmaker_attributes: { under: type_parser.under, over: type_parser.over }} if type_parser.under && type_parser.over
+        attributes << { name: type_parser.name, bookmaker_attributes: { over_under_total_values_attributes: over_under_total_values(type_parser) }}
       end
 
       handicape_type = match_parser.handicape_type
       attributes << { name: handicape_type.name, bookmaker_attributes: { handicapes_attributes: handicapes(handicape_type) } } if handicape_type
     end
+  end
+
+  def over_under_total_values(type_parser)
+    type_parser.bookmaker.totals.map do |total|
+      { name: total.name, under: total.under.value, over: total.over.value } if total.under && total.over
+    end.compact
   end
 
   def handicapes(handicape_type)

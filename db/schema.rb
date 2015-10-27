@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026072848) do
+ActiveRecord::Schema.define(version: 20151027201037) do
 
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
@@ -28,8 +28,6 @@ ActiveRecord::Schema.define(version: 20151026072848) do
     t.decimal  "draw"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.decimal  "under"
-    t.decimal  "over"
   end
 
   add_index "bookmakers", ["odd_type_id"], name: "index_bookmakers_on_odd_type_id"
@@ -84,5 +82,14 @@ ActiveRecord::Schema.define(version: 20151026072848) do
   end
 
   add_index "odd_types", ["match_id"], name: "index_odd_types_on_match_id"
+
+  create_table "over_under_total_values", force: :cascade do |t|
+    t.integer  "bookmaker_id"
+    t.string   "name"
+    t.decimal  "under"
+    t.decimal  "over"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
 end
