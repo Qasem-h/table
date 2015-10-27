@@ -17,7 +17,7 @@ class LoadLeagueData
   private
 
   def update_matches(league_parser, league)
-    league_parser.matches.select { |match| match.type.present? }.each { |match_parser| update_match(match_parser, league) }
+    league_parser.matches.each { |match_parser| update_match(match_parser, league) if match_parser.odds_present? }
   end
 
   def update_match(match_parser, league)
@@ -38,7 +38,24 @@ class LoadLeagueData
   end
 
   def odd_types_attributes(match_parser)
-    [{ name: '1x2', bookmaker_attributes: { home_win: match_parser.oddwinh, away_win: match_parser.oddwina, draw: match_parser.oddwind }}]
+    [].tap do |attributes|
+      match_parser.standard_types.each do |type_parser|
+        attributes << { name: type_parser.name, bookmaker_attributes: { home_win: type_parser.oddwinh, away_win: type_parser.oddwina, draw: type_parser.oddwind }}
+      end
+
+      match_parser.over_under_types.each do |type_parser|
+        attributes << { name: type_parser.name, bookmaker_attributes: { under: type_parser.under, over: type_parser.over }}
+      end
+
+      match_parser.handicape_type
+      attributes << { name: match_parser.handicape_type.name, bookmaker_attributes: { handicapes_attributes: handicapes(match_parser.handicape_type) } }
+    end
+  end
+
+  def handicapes(handicape_type)
+    handicape_type.odds.map do |odd|
+      { name: odd.handicape, value: odd.value, handicape_type: odd.name }
+    end
   end
 
   def remote_file

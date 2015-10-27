@@ -26,39 +26,15 @@ class MatchParser
     league.country
   end
 
+  def odds_present?
+    standard_types.present? || over_under_types.present? || handicape_type.present?
+  end
+
   def name
     "#{hometeam} vs #{awayteam}"
   end
 
   def datetime
     Time.parse([@date, @time].join(' '))
-  end
-
-  def bookmaker
-    type && type.bookmaker || NullBookmaker.new
-  end
-
-  def oddnameh
-    bookmaker.odds.first.name
-  end
-
-  def oddwinh
-    bookmaker.odds.first.value
-  end
-
-  def oddnamea
-    bookmaker.odds.second.name
-  end
-
-  def oddwina
-    bookmaker.odds.second.value
-  end
-
-  def oddnamed
-    bookmaker.odds.third.name
-  end
-
-  def oddwind
-    bookmaker.odds.third.value
   end
 end

@@ -1,5 +1,10 @@
 class OverUnderTotalValueParser
   include SAXMachine
 
-  elements :odd, as: :odds, class: OddParser
+  element :odd, as: :under, class: OddParser, with: {
+    name: 'Under'
+  }
+  element :odd, as: :over, class: OddParser, with: {
+    name: 'Over'
+  }
 end

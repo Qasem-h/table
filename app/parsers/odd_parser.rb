@@ -3,4 +3,8 @@ class OddParser
 
   attribute :name
   attribute :value
+
+  ancestor :handicape do |handicape|
+    handicape.name
+  end
 end
