@@ -16,7 +16,7 @@ class MatchParser
   elements :type, as: :over_under_types, class: OverUnderOddTypeParser, with: {
     name: /(Over\/Under|Over\/Under 1st Half|Over\/Under 2nd Half)/
   }
-  element :type, as: :handicap_type, class: HandicapOddTypeParser, with: {
+  element :type, as: :handicape_type, class: HandicapOddTypeParser, with: {
     name: 'Handicap'
   }
   ancestor :league do |league|

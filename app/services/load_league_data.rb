@@ -40,15 +40,17 @@ class LoadLeagueData
   def odd_types_attributes(match_parser)
     [].tap do |attributes|
       match_parser.standard_types.each do |type_parser|
-        attributes << { name: type_parser.name, bookmaker_attributes: { home_win: type_parser.oddwinh, away_win: type_parser.oddwina, draw: type_parser.oddwind }}
+        if type_parser.oddwina && type_parser.oddwinh
+          attributes << { name: type_parser.name, bookmaker_attributes: { home_win: type_parser.oddwinh, away_win: type_parser.oddwina, draw: type_parser.oddwind }}
+        end
       end
 
       match_parser.over_under_types.each do |type_parser|
-        attributes << { name: type_parser.name, bookmaker_attributes: { under: type_parser.under, over: type_parser.over }}
+        attributes << { name: type_parser.name, bookmaker_attributes: { under: type_parser.under, over: type_parser.over }} if type_parser.under && type_parser.over
       end
 
-      match_parser.handicape_type
-      attributes << { name: match_parser.handicape_type.name, bookmaker_attributes: { handicapes_attributes: handicapes(match_parser.handicape_type) } }
+      handicape_type = match_parser.handicape_type
+      attributes << { name: handicape_type.name, bookmaker_attributes: { handicapes_attributes: handicapes(handicape_type) } } if handicape_type
     end
   end
 

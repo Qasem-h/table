@@ -4,6 +4,10 @@ class StandardOddTypeParser
   attribute :name
   element :bookmaker, class: StandardBookmakerParser
 
+  def bookmaker
+    @bookmaker || NullBookmaker.new
+  end
+
   def oddwinh
     bookmaker.odds.first.value
   end
@@ -13,6 +17,10 @@ class StandardOddTypeParser
   end
 
   def oddwind
-    bookmaker.odds.third.value
+    third_odd.value
+  end
+
+  def third_odd
+    bookmaker.odds.third || NullOdd.new
   end
 end

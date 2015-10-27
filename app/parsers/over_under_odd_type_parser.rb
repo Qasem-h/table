@@ -5,10 +5,14 @@ class OverUnderOddTypeParser
   element :bookmaker, class: OverUnderBookmakerParser
 
   def over
-    bookmaker.total.over.value
+    total.over && total.over.value
   end
 
   def under
-    bookmaker.total.under.value
+    total.under && total.under.value
+  end
+
+  def total
+    bookmaker.total || NullTotal.new
   end
 end
