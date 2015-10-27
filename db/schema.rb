@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027201037) do
+ActiveRecord::Schema.define(version: 20151027204820) do
 
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
@@ -90,6 +90,16 @@ ActiveRecord::Schema.define(version: 20151027201037) do
     t.decimal  "over"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer  "match_id"
+    t.integer  "ht_home_goal"
+    t.integer  "ht_away_goal"
+    t.integer  "ft_home_goal"
+    t.integer  "ft_away_goal"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
