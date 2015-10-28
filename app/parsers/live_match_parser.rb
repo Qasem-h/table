@@ -21,4 +21,13 @@ class LiveMatchParser
   def ft_away_goal
     ft && ft.match(/\d+\D+(\d+)/) { $1 }
   end
+
+  def params
+    {
+      ht_home_goal: ht_home_goal,
+      ht_away_goal: ht_away_goal,
+      ft_home_goal: ft_home_goal,
+      ft_away_goal: ft_away_goal
+    }
+  end
 end
