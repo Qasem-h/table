@@ -7,4 +7,5 @@ module Clockwork
   end
 
   every(30.minutes, 'import_leagues') { LoadAllLeaguesWorker.perform_async }
+  every(15.minutes, 'import_livescores') { LoadLivescoreWorker.perform_async }
 end
