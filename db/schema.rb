@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151027204820) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "betslips", force: :cascade do |t|
     t.integer  "winnings_cents", default: 0, null: false
     t.datetime "created_at",                 null: false
@@ -30,7 +33,7 @@ ActiveRecord::Schema.define(version: 20151027204820) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "bookmakers", ["odd_type_id"], name: "index_bookmakers_on_odd_type_id"
+  add_index "bookmakers", ["odd_type_id"], name: "index_bookmakers_on_odd_type_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.integer  "winnings"
@@ -45,7 +48,7 @@ ActiveRecord::Schema.define(version: 20151027204820) do
     t.integer  "stake_cents", default: 0, null: false
   end
 
-  add_index "games", ["betslip_id"], name: "index_games_on_betslip_id"
+  add_index "games", ["betslip_id"], name: "index_games_on_betslip_id", using: :btree
 
   create_table "handicapes", force: :cascade do |t|
     t.string   "name"
@@ -81,7 +84,7 @@ ActiveRecord::Schema.define(version: 20151027204820) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "odd_types", ["match_id"], name: "index_odd_types_on_match_id"
+  add_index "odd_types", ["match_id"], name: "index_odd_types_on_match_id", using: :btree
 
   create_table "over_under_total_values", force: :cascade do |t|
     t.integer  "bookmaker_id"
@@ -102,4 +105,6 @@ ActiveRecord::Schema.define(version: 20151027204820) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "bookmakers", "odd_types"
+  add_foreign_key "odd_types", "matches"
 end
